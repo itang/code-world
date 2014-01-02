@@ -9,7 +9,7 @@ impl Monster {
   }
 
   fn attack(&self) {
-    println(format!("The monster attacks for {:d} damage.", self.attack))
+    println!("The monster attacks for {:d} damage.", self.attack)
   }
 
   fn count() {
