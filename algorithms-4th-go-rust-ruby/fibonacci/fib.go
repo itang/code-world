@@ -1,3 +1,7 @@
+/**
+ * fibonacci go version
+ */
+
 package main
 
 import "fmt"
@@ -10,32 +14,24 @@ func Fib(i int) int {
 }
 
 func main() {
-	assert(Fib(0) == 0)
-	assert(Fib(1) == 1)
-	assert(Fib(2) == 1)
-	assert(Fib(3) == 2)
-	assert(Fib(4) == 3)
-	assert(Fib(5) == 5)
-	assert(Fib(6) == Fib(5)+Fib(4))
+	for i, v := range fibs(20) {
+		fmt.Printf("Fib(%d)=%d\n", i, v)
+	}
 
-	const len = 20
-	var i = 0
-	var ret = make([]int, len)
-	for i < len {
-		ret = append(ret, Fib(i))
-		fmt.Printf("Fib(%d)=%d ", i, Fib(i))
-		i += 1
-		if i%5 == 0 {
-			fmt.Println()
-		}
-	}
-	for _, v := range ret {
-		fmt.Printf("%d ", v)
-	}
+	assert(Fib(19) == 4181)
 }
 
-func assert(t bool) {
-	if !t {
-		panic("Assert Failed!")
+/////////////////////////////////////////////////
+func fibs(max int) (ret []int) {
+	ret = make([]int, 0, max)
+	for i := 0; i < max; i++ {
+		ret = append(ret, Fib(i))
+	}
+	return
+}
+
+func assert(b bool) {
+	if !b {
+		panic("Assert fail!")
 	}
 }

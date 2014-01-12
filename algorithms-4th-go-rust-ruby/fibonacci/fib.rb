@@ -1,3 +1,7 @@
+#
+# fibonacci go version
+#
+
 def fib(i)
   if i == 0 or i == 1
     i

@@ -261,6 +261,7 @@ alphabetic characters, numbers, or underscores. The preferred style is to
 write function, variable, and module names with lowercase letters, using
 underscores where they help readability, while writing types in camel case.
 
+更好的风格是：当写函数、变量和模块的名字使用小写字母，使用下划线‘_’来帮助代码的可读性。当写类型时则使用“骆驼”风格。
 ~~~
 let my_variable = 100;
 type MyType = int;     // primitive types are _not_ camel case
@@ -306,17 +307,23 @@ are no semicolons in the blocks of the second snippet. This is
 important: the lack of a semicolon after the last statement in a
 braced block gives the whole block the value of that last expression.
 
+如果最后一条语句没有分号，那么它所计算的值将作为整个块的返回值。
+
 Put another way, the semicolon in Rust *ignores the value of an expression*.
 Thus, if the branches of the `if` had looked like `{ 4; }`, the above example
 would simply assign `()` (nil or void) to `price`. But without the semicolon, each
 branch has a different value, and `price` gets the value of the branch that
 was taken.
 
+相反的， 如果有分号，那么这个表达式的值将被忽略。
+
 In short, everything that's not a declaration (declarations are `let` for
 variables; `fn` for functions; and any top-level named items such as
 [traits](#traits), [enum types](#enums), and static items) is an
 expression, including function bodies.
 
+简而言之，下面所有的东西都不是声明（除了用`let`声明变量）：
+   `fn` 对于函数，顶级的命名如traits，enum types和static items， 它们都是表达式，包括函数体在内。
 ~~~~
 fn is_four(x: int) -> bool {
    // No need for a return statement. The result of the expression
@@ -1161,6 +1168,8 @@ operator. It can be dereferenced by using the `*` operator. In a pattern, such a
 branches, the `ref` keyword can be used to bind to a variable name by-reference rather than
 by-value. A recursive definition of equality using references is as follows:
 
+引用是一个值的“非所有”视图。一个引用通过取地址操作符‘&’来获取。它通过‘*’来解引用。在模式匹配中，诸如‘match’表达式分支， ‘ref’关键字用来绑定一个引用的变量名字，而不是绑定值。
+
 ~~~
 # enum List {
 #     Cons(u32, ~List),
@@ -1264,6 +1273,8 @@ without a move of ownership.
 We can add a *trait bound* on the `Eq` trait to require that the type implement the `==` operator.
 Two more `ref` annotations need to be added to avoid attempting to move out the element types:
 
+我们加上 ‘Eq' trait ‘trait bound’ , 以确保范型参数类型实现了'=='操作符。两个'ref'标注需要被加入，以避免尝试move语义“move out"元素类型。
+
 ~~~
 # enum List<T> {
 #     Cons(T, ~List<T>),
@@ -1327,6 +1338,8 @@ dispatch via boxing. Values of different types may have different sizes, but a
 box is able to *erase* the difference via the layer of indirection they
 provide.
 
+ownerd boxes大部分常用的使用场景是用来创建递类似二进制搜索树的递归数据结构。
+
 In uncommon cases, the indirection can provide a performance gain or memory
 reduction by making values smaller. However, unboxed values should almost
 always be preferred when they are usable.
@@ -1363,6 +1376,8 @@ owned boxes, where the holder of an owned box is the owner of the pointed-to
 memory, borrowed pointers never imply ownership. A pointer can be borrowed to
 any object, and the compiler verifies that it cannot outlive the lifetime of
 the object.
+
+Rust的借贷指针是通用目的的引用类型。相反的，owned boxes，它保持了一个owned box，是指针指向内存的拥有者。借贷指针绝不影响所有权。一个指针能借到任意对象，通过编译器来审核它不能再对象的生命周期之外存活。
 
 As an example, consider a simple struct type, `Point`:
 
@@ -1437,6 +1452,8 @@ value to be freed or to change its type. This rule should make
 intuitive sense: you must wait for a borrowed value to be returned
 (that is, for the borrowed pointer to go out of scope) before you can
 make full use of it again.
+
+例如， 当一个变量的内容已经借出，你不能不能将此变量发送给其他的task，也不允许执行某些会导致值被释放或改变其类型。这条规则应该有直觉的认识：你应该等一个借贷值返回（换句话说，借贷指针逃出了它的作用域）后，你可以完全的再次使用它。
 
 For a more in-depth explanation of borrowed pointers, read the
 [borrowed pointer tutorial][borrowtut].
