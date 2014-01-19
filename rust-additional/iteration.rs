@@ -99,4 +99,83 @@ fn container_iterators() {
     print!("{:s},", i);
   }
   println("");
+
+  iterator_adaptors();
+}
+
+fn iterator_adaptors() {
+  let xs = [1, 9, 2, 3, 14, 12];
+  let result = xs.iter().fold(0, |a, i|{
+    a - *i
+  });
+  assert_eq!(result, -41);
+
+  let ys = [5,2,1,8];
+  let sum =xs.iter().chain(ys.iter()).fold(0, |a, b| a + *b);
+  assert_eq!(sum, 57);
+
+  {
+    let xs = [1,2,3,4,5];
+    let ys = ["foo", "bar", "baz", "foobar"];
+    let mut it = xs.iter().zip(ys.iter());
+    for (x, y) in it {
+      println!("{} {}", *x, *y);
+      if *x == 3 {
+        break;
+      }
+    }
+    println!("last: {:?}", it.next());
+    // the iterator is now fully consumed
+    assert!(it.next().is_none());   
+   };
+
+   (||{
+     println("## Conversion");
+     let xs = [0,1,1,2,3,5,8];
+     let ys = xs.rev_iter().skip(1).map(|&x| x * 2).collect::<~[int]>();
+     assert_eq!(ys, ~[10,6,4,2,2,0]);
+   })();
+
+   (||{
+     println("## Double-ended iterators");
+     let xs = [1,2,3,4,5,6];
+     let mut it = xs.iter();
+     println!("{:?}", it.next());
+     println!("{:?}", it.next_back()); //
+     println!("{:?}", it.next_back()); 
+
+     for &x in it.invert() {
+       println!("{}", x);
+     }
+   })();
+
+   (||{
+    println("## reverse_");
+    let mut ys = [1,2,3,4,5];
+    ys.mut_iter().reverse_();
+    assert_eq!(ys, [5,4,3,2,1]);
+   })();
+
+  (||{
+    println("## Random-access iterators");
+    let xs = [1,2,3,4,5];
+    let ys = ~[7,9,11];
+    let it = xs.iter().chain(ys.iter());
+    println!("{:?}", it.idx(0));
+    println!("{:?}", it.idx(7));
+    println!("{:?}", it.idx(8));
+
+    println!("xs[0]:{:d}", xs[0]);
+    let mut i =0;
+    let max = xs.len();
+    while i < max {
+      println!("{:d}", xs[i]);
+      i += 1;
+    }
+
+    println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+    for x in range(0, xs.len()) {
+      println!("{:d}", xs[x]);
+    }
+  })();
 }

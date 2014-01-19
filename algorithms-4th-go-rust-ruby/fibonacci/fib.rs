@@ -22,8 +22,8 @@ mod fibonacci {
 
 fn main() {
   let fs = fibs(20);
-  for i in range(0, 20) {
-    println!("fib({:d})={:d}", i, fs[i]);
+  for (i, v) in fs.iter().enumerate() {
+   println!("fib({:u})={:d}", i, *v);
   }
   assert_eq!(4181, fib(19));
 }
