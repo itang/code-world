@@ -1,4 +1,7 @@
 /// An infinite stream of zeroes
+
+use std::io::println;
+
 struct InfiniteZeroStream;
 
 impl Iterator<int> for InfiniteZeroStream {

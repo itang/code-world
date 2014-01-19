@@ -1,3 +1,5 @@
+use std::io::println;
+
 trait Monster {
   fn attack(&self);
 }

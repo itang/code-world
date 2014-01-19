@@ -1,3 +1,5 @@
+use std::io::println;
+
 fn main() {
   //100.times(|| {
    //println("num");

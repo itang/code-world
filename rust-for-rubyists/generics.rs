@@ -1,3 +1,5 @@
+use std::io::println;
+
 fn print_vec(v: &[int]) {
   for i in v.iter(){
     println(i.to_str())

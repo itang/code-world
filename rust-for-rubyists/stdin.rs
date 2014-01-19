@@ -1,5 +1,6 @@
 use std::io;
-use std::io::buffered::BufferedReader;
+use std::io::BufferedReader;
+use std::io::{print, println};
 
 fn main() {
   println("INPUT:");

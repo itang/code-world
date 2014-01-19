@@ -1,4 +1,6 @@
 extern mod extra;
+
+use std::io::println;
 use extra::comm::DuplexStream;
 
 fn plus_one(channel: &DuplexStream<int, int>) {

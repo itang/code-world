@@ -1,3 +1,6 @@
+
+use std::io::println;
+
 struct Monster {
     health: int,
     attack: int

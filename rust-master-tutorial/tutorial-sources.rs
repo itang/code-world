@@ -8,7 +8,8 @@ use std::gc::Gc;
 use std::rand::random;
 use std::task::spawn;
 use std::hashmap::HashMap;
-use puts = std::io::stdio::println;
+use std::io::println;
+use puts = std::io::println;
 
 fn main() {
   tprintln();
@@ -687,7 +688,9 @@ fn borrowed_pointers() {
   // *r0 = 10; // cannot assign to immutable dereference of & pointer
   *r1 = 10;
   //*r2 = 10;    // error: cannot assign to immutable dereference of & pointer
-  r2 = &20;
+  let tt = &20;
+  r2 = tt;
+  //r2 = &20;
 
   let mut o1 = ~5;
   let o2 = ~5;

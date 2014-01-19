@@ -1,3 +1,5 @@
+use std::io::println;
+
 fn message(i: int) {
   match i {
     1 => println("ONE!"),

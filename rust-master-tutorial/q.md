@@ -120,3 +120,8 @@ impl Clone for @str {
         *self // ??? *self -> @str
     }
 }
+
+- error: borrowed value does not live long enough
+let mut r2 = &6;
+  
+r2 = &20; // error: borrowed value does not live long enough

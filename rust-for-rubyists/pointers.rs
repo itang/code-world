@@ -1,5 +1,6 @@
 #[feature(managed_boxes)];
 //use std::rc::Rc;
+use std::io::println;
 
 fn main() {
   //managed pointers

@@ -1,3 +1,5 @@
+use std::io::println;
+
 fn main() {
   let your_favorite_numbers = ~[1,2,3];
   let my_favorite_numbers = ~[4,5,6];
