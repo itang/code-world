@@ -125,3 +125,7 @@ impl Clone for @str {
 let mut r2 = &6;
   
 r2 = &20; // error: borrowed value does not live long enough
+
+- cast::transmute(region.addr)
+
+- extern "C" fn(int) -> int
