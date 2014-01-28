@@ -101,3 +101,28 @@ inferred from the type, these static strings are not mutable.
             assert_eq!(*ptr::offset(buf, 4), 'o' as u8);
         }
     }
+
+- pub use
+  reexported namespace in declare mod.
+  pub use result::{Result, Ok, Err};
+
+- root mod for lib from 'crate' 
+  "#[crate_id = "active_support"];"
+  use active_support::Period;
+
+- struct new, return value, not pointers, caller decise how to use.
+
+- mut self
+  copy, modify, return
+  pub fn years(mut self, years: f32) -> TimeChange {
+    self.years = Some(years);
+    self
+  }
+
+- type default value
+
+```rust
+    pub fn range_with_start_zero<A: Add<A, A> + Ord + Clone + One + Default>(stop: A) -> Range<A> {
+        range(Default::default(), stop)
+    }
+```

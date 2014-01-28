@@ -39,7 +39,7 @@ let mut b = ~"abc";
   let y = @*x;
   println!("{:?}{:?}",*x, *y);
   
--  error: borrowed value does not live long enough
+- *  error: borrowed value does not live long enough
 fn vec() -> ~[int] {
   ~[1,2,3]
 }
@@ -53,6 +53,8 @@ fn vec() -> ~[int] {
 
   }
 
+  Jan 18th, 2014 weekly status:
+ "The “rvalue lifetime” issue has seen some significant work put into it. Notably, for x in [1, 2, 3, 4].iter() { .. } should now work, among many other papercut annoyances with rvalues."
 
 -  so syntax?
 for 'a |char| ??
@@ -73,6 +75,8 @@ impl CharEq for extern "Rust" fn(char) -> bool {
 
 - method & or non-&
 non-& is clone?
+
+```rust
 fn append(self, rhs: &str) -> ~str {
   let mut new_str = self;
   new_str.push_str_no_overallocate(rhs);
@@ -112,6 +116,7 @@ impl A {
     ~new
   }
 }
+```
 
 - @str clone
 impl Clone for @str {
@@ -129,3 +134,44 @@ r2 = &20; // error: borrowed value does not live long enough
 - cast::transmute(region.addr)
 
 - extern "C" fn(int) -> int
+
+- #[repr(C)] ??
+
+
+- mod rec ref??
+
+-      let s: ~str = ~""; // no need let mut s = ~"" for push_char
+
+  // NOTICE :  `&mut (*state).data`
+
+```rust
+    let rwarc = RWArc::new(s);
+
+    pub fn write<U>(&self, blk: |x: &mut T| -> U) -> U {
+      unsafe {
+        let state = self.x.get();
+        (*borrow_rwlock(state)).write(|| {
+          check_poison(false, (*state).failed);
+          let _z = PoisonOnFail::new(&mut (*state).failed);
+          blk(&mut (*state).data)
+        })
+      }
+    }
+
+    pub struct UnsafeArc<T> {
+      priv data: *mut ArcData<T>,
+    }
+```
+
+- error: cannot determine a type for this bounded type parameter: unconstrained type
+
+```rust
+fn d<A: Clone + Default + Zero>(obj: A){
+    /*println!("{:?} default: {:?}, zero: {:?}",
+            obj,
+            Default::default(),
+            Zero::zero());*/
+
+    println!("{:?} {:?}", obj, Default::default()); // error
+}
+```

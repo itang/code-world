@@ -191,7 +191,7 @@ fn primitive_types_literals() {
   // type range
   let i :u16 = 65535u16; // pow(2, 16) - 1;
   assert_eq!(~"max_value::<u16> = 65535", format!("max_value::<u16> = {:u}", i));
-  assert_eq!(i, std::u16::max_value);
+  assert_eq!(i, std::u16::MAX);
 }
 
 fn operations() {

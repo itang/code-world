@@ -101,7 +101,7 @@ fn main() {
       let M = 100000;
       let mut local_sum = 0f64;
       for num in range(start*M, (start+1)*M){
-        local_sum += (num as f64 + 1.0).pow(&-2.0);
+        local_sum += std::f64::pow(num as f64 + 1.0, -2.0);
       }
       local_sum
     }

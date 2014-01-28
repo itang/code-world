@@ -11,7 +11,7 @@ impl Iterator<int> for InfiniteZeroStream {
 }
 
 struct ZeroStream {
-  priv remaining: uint
+  remaining: uint
 }
 
 impl ZeroStream {
@@ -147,7 +147,7 @@ fn iterator_adaptors() {
      println!("{:?}", it.next_back()); //
      println!("{:?}", it.next_back()); 
 
-     for &x in it.invert() {
+     for &x in it.rev() {
        println!("{}", x);
      }
    })();
