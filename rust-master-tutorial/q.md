@@ -175,3 +175,34 @@ fn d<A: Clone + Default + Zero>(obj: A){
     println!("{:?} {:?}", obj, Default::default()); // error
 }
 ```
+
+- option.take -> util::replace
+ struct Delay<T> {
+    value: Option<T>,
+    func:  proc() -> T
+}
+
+ match (*self).value {
+            None => {
+                let v = ((*self).func)(); // error
+                (*self).value = Some(v.clone());
+                v
+            },
+            Some(ref v) => (*v).clone()
+        }
+
+struct Delay<T> {
+    value: Option<T>,
+    func:  Option<proc() -> T>
+}
+
+     match (*self).value {
+            None => {
+                let f = self.func.take().unwrap(); // OK
+                let v = f();
+                (*self).value = Some(v.clone());
+                v
+            },
+            Some(ref v) => (*v).clone()
+        }
+    }

@@ -126,3 +126,5 @@ inferred from the type, these static strings are not mutable.
         range(Default::default(), stop)
     }
 ```
+
+- Trait objects use dynamic dispatch and vtables.
