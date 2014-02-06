@@ -70,10 +70,10 @@ fn main() {
     println!("s2: {:?}", s2);
     println!("s3: {:?}", s3);
 
-    do spawn {
+    spawn(proc() {
         let mut copyd = d;
         println!("spawn: {:?}", copyd.force());
         println!("spawn: {:?}", copyd.is_forced());
         assert!(copyd.is_forced());
-    }
+    });
 }

@@ -26,23 +26,23 @@ mod BufferedReader {
 fn main() {
   common(&"Option<T>", read_int_pairs);
 
-  do spawn {
+  spawn(proc() {
     println("task1: 1");
     fail!("throw task error!");
     println("task2: 2"); // warning: unreachable statement, #[warn(unreachable_code)] on by default
-  }
+  });
 
   println("main task");
   let mut x = 0;
-  5.times(|| {
+  for _ in range(0, 5) {
     println!("x: {:?}", x);
     x += 1;
-  });
+  }
 
   // Isolate failture withina subtask.
-  let result = do task::try {
+  let result = task::try (proc() {
     common(&"fail-try", read_int_pairs_try);
-  };
+  });
   if result.is_err() {
     println("parsing failed");
   }
@@ -54,13 +54,13 @@ fn main() {
   let mut mov = ~[1,2,3];
 
   let bv = &[1,2,3];
-  do spawn {
+  spawn(proc() {
     println!("sv:{:?}", sv); // copy
     //println!("msv:{:?}", msv); // error: mutable variables cannot be implicitly captured
     println!("ov:{:?}", ov); // move
     // println!("mov:{:?}", mov); // error: mutable variables cannot be implicitly captured
     //println!("bv:{:?}", bv); //error: cannot capture variable of type `&[int]`, which does not fulfill `Send`, in a bounded closure
-  }
+  });
 }
 
 fn common(msg: &str, c: || -> ~[(int, int)]) {
@@ -75,7 +75,7 @@ fn read_int_pairs() -> ~[(int,int)] {
   let mut pairs = ~[];
 
   //Path takes a generic by-value, rather than by reference
-  let _g = std::io::ignore_io_error();
+  //let _g = std::io::ignore_io_error();
   let path = Path::new(&"data/numbers.txt");
   let mut reader = BufferedReader::new(File::open(&path));
 
@@ -104,7 +104,7 @@ fn read_int_pairs() -> ~[(int,int)] {
 
 fn read_int_pairs_try() -> ~[(int, int)]{
   let mut pairs = ~[];
-  let _g = std::io::ignore_io_error();
+  //let _g = std::io::ignore_io_error();
   let path = Path::new(&"data/numbers.txt");
 
   let mut reader = BufferedReader::new(File::open(&path));

@@ -15,34 +15,34 @@ fn main() {
 
     spawn(print_message);
     spawn(proc() println("I am also running in a different task"));
-    do spawn || {
+    spawn(proc() {
       println("I too an running in a different task!");
-    }
+    });
 
-    do spawn {
+    spawn(proc() {
       println("I too too an running in a different task!");
-    }
+    });
   }
   use_std_task_spawn();
 
   fn capture() {
     fn generate_task_number() -> int { 0 }
     let child_task_number = generate_task_number();
-    do spawn {
+    spawn(proc() {
       println!("I am child number {}", child_task_number);
-    }
+    });
   }
   capture();
 
   fn pipes() {
     let (port, chan): (Port<int>, Chan<int>) = Chan::new();
-    do spawn || {
+    spawn(proc() {
       fn some_expensive_computation() -> int {
         100.0 as int
       }
       let result = some_expensive_computation();
       chan.send(result);
-    }
+    });
 
     let ret = port.recv();
     println!("ret:{}", ret);
@@ -55,14 +55,14 @@ fn main() {
     for inti_val in range(0u, MAX) {
       // Create a new channel handle to distribute to th echild task
       let child_chan = chan.clone();
-      do spawn {
+      spawn(proc() {
         child_chan.send((|x| x)(inti_val));
-      }
+      });
     }
     let mut result = 0u;
-    MAX.times(|| {
+    for _ in range(0, MAX) {
       result += port.recv();
-    });
+    }
     println!("result:{}", result);
   }
   shared_chan();
@@ -70,10 +70,10 @@ fn main() {
   fn advance() {
     let ports = std::vec::from_fn(3, |init_val| {
       let (port, chan) = Chan::new();
-      do spawn {
+      spawn(proc() {
         println(init_val.to_str());
         chan.send((|x: uint| x + 1)(init_val));
-      }
+      });
       port
     });
 
@@ -106,7 +106,7 @@ fn main() {
       local_sum
     }
 
-    let mut futures = std::vec::from_fn(1000, |ind| do extra::future::Future::spawn{ partial_sum(ind)});
+    let mut futures = std::vec::from_fn(1000, |ind| extra::future::Future::spawn (proc(){ partial_sum(ind)}));
 
     let mut final_res = 0f64;
     for ft in futures.mut_iter() {
@@ -127,9 +127,9 @@ fn main() {
 
     let (from_child, to_child) = extra::comm::DuplexStream::new();
 
-    do spawn {
+    spawn(proc() {
       stringifier(&to_child);
-    }
+    });
     from_child.send(22);
     assert!(from_child.recv() == ~"22");
 

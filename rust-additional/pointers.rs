@@ -22,16 +22,16 @@ fn main() {
     let p2 = transform1(&p1);
     assert_eq!(6, p2.x);
 
-    do spawn {
+    spawn(proc() {
       println(p2.x.to_str());
-    }
+    });
 
     let p3 = ~p2;
     let p4 = ~Point {x:10, y:20};
-    do spawn {
+    spawn(proc() {
       println(p3.x.to_str());
       println(p4.x.to_str());
-    }
+    });
 
   })();
 
@@ -45,9 +45,9 @@ fn main() {
     let p1 = &Point{x:10,y:20};
     let p2 = p1;
     println!("{:?}, {:?}", p1, p2);
-    do spawn {
+    spawn(proc() {
       //println!("{:?}", p1);
-    }
+    });
 
     fn foo(x: ~int) -> int { *x }
     let x = ~5;

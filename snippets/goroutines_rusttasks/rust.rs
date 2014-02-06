@@ -5,7 +5,7 @@ pub fn par_sum(to: int) -> int {
     let (port, chan) = SharedChan::new();
     times(to, |i| {
       let c = chan.clone();
-      do spawn { c.send(i); }
+      spawn(proc() { c.send(i); });
     });
     range_zero(to).fold(0, |s, _|  s + port.recv() )
 }

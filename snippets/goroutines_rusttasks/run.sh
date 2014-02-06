@@ -18,10 +18,10 @@ rustc -o ./tmp/run-rust rust.rs
 # run
 echo "#run..."
 echo "\n##run-go..."
-time ./tmp/run-go
+echo "`time ./tmp/run-go`"
 
 echo "\n##run-rust..."
-time ./tmp/run-rust
+echo "`time ./tmp/run-rust`"
 
 # clean
 echo "\n#clean..."

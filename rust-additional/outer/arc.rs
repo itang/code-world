@@ -17,11 +17,11 @@ fn main() {
       let (port, chan) = Chan::new();
       chan.send(numbers_arc.clone());
 
-      do spawn {
+      spawn(proc() {
         let local_arc = port.recv();
         let task_numbers = local_arc.get();
         println!("{:d}", task_numbers[num]);
-      }
+      });
     }
   }
   arc();
@@ -36,11 +36,11 @@ fn main() {
       let (port, chan) = Chan::new();
       chan.send(numbers_arc.clone());
 
-      do spawn {
+      spawn(proc() {
         let local_arc = port.recv();
         local_arc.write(|nums| nums[num] += 1 );
         local_arc.read(|nums| println!("{:d}", nums[num]) );
-      }
+      });
     }
 
     numbers_arc.read(|nums| { println!("{:?}", nums); });
@@ -67,17 +67,17 @@ fn arc_chan_tasks() {
     let rwarc = RWArc::new(s);
 
     let mut i = 0;
-    100000.times(|| {
+    for _ in range(0, 100000) {
         let (p, c) = Chan::new();
         c.send((i,rwarc.clone()));
         i = i + 1;
-        do spawn {
+        spawn(proc() {
            let (index, local_arc) = p.recv();
             local_arc.write(|it| {
                 it.push_char( (index % 128) as u8 as char);
             });
-        }
-    });
+        });
+    }
 
     rwarc.read(|it|{
         println!("{:?}", it);

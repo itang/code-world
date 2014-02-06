@@ -776,11 +776,12 @@ fn dereferenced() {
   let point = &@~Point { x: 10.0, y: 20.0 };
   assert_eq!(10.0 + 20.0, point.x + (*(*(*point))).y);
 
-  let arr: ~@[int] = ~@[1, 3, 5];
-  assert_eq!(size_of::<~int>(), size_of::<~@[int]>());
-  assert_eq!(size_of::<~int>(),  size_of::<@[int]>());
+  //let arr: ~@[int] = ~@[1, 3, 5]; // error: obsolete syntax: managed vector
+  let arr = std::rc::Rc::new(~[1,3,5]);
+  //assert_eq!(size_of::<~int>(), size_of::<~@[int]>());
+ // assert_eq!(size_of::<~int>(),  size_of::<@[int]>());
   assert_eq!(size_of::<int>() * 10, size_of::<[int, ..10]>());
-  assert_eq!((1,5), (arr[0], arr[2]));
+  assert_eq!((1,5), (arr.borrow()[0], arr.borrow()[2]));
 }
 
 fn vectors() {
@@ -980,17 +981,17 @@ fn do_syntax() {
     format!("invoke proc: {}", n.to_str());
   });
 
-  do call_it() |n| {
+  call_it(proc(n) {
     format!("do invoke: {}", n.to_str());
-  }
+  });
 
-  do spawn() || {
+  spawn(proc(){
     "I'm a task, whatever";
-  }
+  });
 
-  do spawn() {
+  spawn(proc() {
     "I'm a task yet, whatever";
-  }
+  });
 }
 
 fn methods() {

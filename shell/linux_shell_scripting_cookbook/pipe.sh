@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function cout() {
+function cout(){
     echo "*out:\n`cat .tmp/out.txt`";
 }
 
@@ -25,3 +25,28 @@ cout
 
 ls -l | tee .tmp/out.txt | cat -n
 cout
+
+ls | cat -n > .tmp/out.txt
+cout
+
+cmd_output=$(ls -l | cat -n)
+echo "$cmd_output"
+
+cmd_output=`echo $USER | cat -n`
+echo ""
+echo "$cmd_output"
+cmd_output=`ls + | cat -n`
+if [ "$cmd_output" == "" ]; then
+    echo "NO"
+fi
+
+# () for new shell process
+
+pwd;
+mkdir .tmp;
+(cd .tmp; pwd; ls;);
+
+pwd;
+
+# use "" reserve \n
+echo "$(ls -l)"
