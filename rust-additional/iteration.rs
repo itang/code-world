@@ -1,7 +1,5 @@
 /// An infinite stream of zeroes
 
-use std::io::println;
-
 struct InfiniteZeroStream;
 
 impl Iterator<int> for InfiniteZeroStream {
@@ -47,7 +45,7 @@ fn iteration_protocol() {
     j += 1;
   }
 
-  println("");
+  println!("");
 
   let mut zstream = ZeroStream::new(10);
   j = 0;
@@ -78,30 +76,30 @@ fn container_iterators() {
     println!("i: {:d}", *i);
   }
 
-  println("unique vector iter:");
+  println!("unique vector iter:");
   let v3 = ~[6,7,8];
   for i in v3.iter() {
     print!("{:d}", *i);
   }
-  println("rev_iter:");
+  println!("rev_iter:");
   for i in v3.rev_iter() {
     print!("{:d}", *i);
   }
-  println("");
+  println!("");
 
   let v4 = &mut[1,2,4];
-  println("mut_iter:");
+  println!("mut_iter:");
   for i in v4.mut_iter() {
     *i = 10;
   }
   println!("{:?}", v4);
 
-  println("move_iter:");
+  println!("move_iter:");
   let v5 = ~[~"a", ~"b"];
   for i in v5.move_iter() {
     print!("{:s},", i);
   }
-  println("");
+  println!("");
 
   iterator_adaptors();
 }
@@ -133,14 +131,14 @@ fn iterator_adaptors() {
    };
 
    (||{
-     println("## Conversion");
+     println!("== Conversion");
      let xs = [0,1,1,2,3,5,8];
      let ys = xs.rev_iter().skip(1).map(|&x| x * 2).collect::<~[int]>();
      assert_eq!(ys, ~[10,6,4,2,2,0]);
    })();
 
    (||{
-     println("## Double-ended iterators");
+     println!("== Double-ended iterators");
      let xs = [1,2,3,4,5,6];
      let mut it = xs.iter();
      println!("{:?}", it.next());
@@ -153,14 +151,14 @@ fn iterator_adaptors() {
    })();
 
    (||{
-    println("## reverse_");
+    println!("== reverse_");
     let mut ys = [1,2,3,4,5];
     ys.mut_iter().reverse_();
     assert_eq!(ys, [5,4,3,2,1]);
    })();
 
   (||{
-    println("## Random-access iterators");
+    println!("== Random-access iterators");
     let xs = [1,2,3,4,5];
     let ys = ~[7,9,11];
     let it = xs.iter().chain(ys.iter());
@@ -176,7 +174,7 @@ fn iterator_adaptors() {
       i += 1;
     }
 
-    println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+    println!("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
     for x in range(0, xs.len()) {
       println!("{:d}", xs[x]);
     }

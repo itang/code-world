@@ -8,7 +8,6 @@ use std::gc::Gc;
 use std::rand::random;
 use std::task::spawn;
 use std::hashmap::HashMap;
-use std::io::println;
 use puts = std::io::println;
 
 fn main() {
@@ -227,7 +226,7 @@ fn operations() {
   }
 
   fn f2() -> bool {
-    println("f2");
+    println!("f2");
     false
   }
 
@@ -360,6 +359,28 @@ fn data_structures_struct() {
   match mypoint {
     Point {x, .. } => assert_eq!(~"0", x.to_str())
   }
+
+  let mut m = mypoint;
+  m.y = 100.0;
+  let c = Point { x: 10.0, ..m }; // "merge copy"
+  assert_eq!(10.0, c.x);
+  assert_eq!(100.0, c.y);
+
+  struct Pair { x: int, y: int }
+  impl Pair {
+    fn zeroed_x_copy(self) -> Pair {
+      Pair { x: 0, ..self }
+    }
+    fn replace_x(&mut self, newx: int) { self.x = newx; }
+  }
+  
+  let p1 = Pair { x:1, y:1 };
+  let p2 = p1.zeroed_x_copy();
+  assert_eq!(0, p2.x);
+  assert_eq!(1, p2.y);
+  let mut p3 = p2;
+  p3.replace_x(100);
+  assert_eq!(100, p3.x);
 }
 
 fn data_structures_enum() {

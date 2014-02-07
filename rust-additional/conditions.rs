@@ -6,6 +6,7 @@
 extern mod extra;
 use std::io::BufferedReader;
 use std::io::File;
+use std::io::IoResult;
 use std::task;
 use std::io::println;
 
@@ -18,7 +19,7 @@ mod BufferedReader {
     789 123\n\
     45 67\n\
     ");
-  pub fn new(_inner: Option<File>) -> BufferedReader<MemReader> {
+  pub fn new(_inner: File) -> BufferedReader<MemReader> {
     BufferedReader::new(MemReader::new(s.to_owned()))
   }
 }
@@ -63,21 +64,26 @@ fn main() {
   });
 }
 
-fn common(msg: &str, c: || -> ~[(int, int)]) {
+fn common(msg: &str, c: || -> IoResult<~[(int, int)]>) {
   println!("******** {:s}", msg);
   let pairs =c();
-  for &(a, b) in pairs.iter() {
-    println!("{:4.4d}, {:4.4d}", a, b);
+  match pairs {
+    Ok(p) => {
+      for &(a, b) in p.iter() {
+        println!("{:4.4d}, {:4.4d}", a, b);
+      }
+    }
+    _ => ()
   }
 }
 
-fn read_int_pairs() -> ~[(int,int)] {
+fn read_int_pairs() -> IoResult<~[(int,int)]> {
   let mut pairs = ~[];
 
   //Path takes a generic by-value, rather than by reference
   //let _g = std::io::ignore_io_error();
   let path = Path::new(&"data/numbers.txt");
-  let mut reader = BufferedReader::new(File::open(&path));
+  let mut reader = BufferedReader::new(if_ok!(File::open(&path)));
 
   //1. Iterate over the lines of our file.
   for line in reader.lines() {
@@ -99,15 +105,15 @@ fn read_int_pairs() -> ~[(int,int)] {
     }
   }
 
-  pairs
+  Ok(pairs)
 }
 
-fn read_int_pairs_try() -> ~[(int, int)]{
+fn read_int_pairs_try() -> IoResult<~[(int, int)]>{
   let mut pairs = ~[];
   //let _g = std::io::ignore_io_error();
   let path = Path::new(&"data/numbers.txt");
 
-  let mut reader = BufferedReader::new(File::open(&path));
+  let mut reader = BufferedReader::new(if_ok!(File::open(&path)));
   for line in reader.lines() {
     match line.words().to_owned_vec() {
       [a, b] => pairs.push((from_str::<int>(a).unwrap(),
@@ -115,5 +121,5 @@ fn read_int_pairs_try() -> ~[(int, int)]{
       _ => fail!()
     }
   }
-  pairs
+  Ok(pairs)
 }

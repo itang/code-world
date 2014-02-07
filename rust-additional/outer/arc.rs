@@ -2,12 +2,11 @@
 
 extern mod extra;
 
-use std::io::println;
 use extra::arc::Arc;
 use extra::arc::RWArc;
 
 fn main() {
-  println("Arc...");
+  println!("Arc...");
   /// Arc stands for 'atomically reference counted', and it's a way to share immutable data between multiple tasks.
   fn arc() {
     let numbers = [1, 2, 3];
@@ -26,7 +25,7 @@ fn main() {
   }
   arc();
 
-  println("RWArc...");
+  println!("RWArc...");
   /// Rust provides a tools for shared mutable state: RWArc. This variant of an Arc allows the contents of the Arc to be mutated.
   fn rwarc() {
     let numbers = [1,2,3];

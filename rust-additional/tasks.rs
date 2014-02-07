@@ -4,23 +4,21 @@
 
 extern mod extra;
 
-use std::io::println;
-
 fn main() {
   // In general, all Rust code executes inside a task, including the `main` function.
   fn use_std_task_spawn() {
     fn print_message() {
-      println("I an running in a different task!");
+      println!("I an running in a different task!");
     }
 
     spawn(print_message);
-    spawn(proc() println("I am also running in a different task"));
+    spawn(proc() println!("I am also running in a different task"));
     spawn(proc() {
-      println("I too an running in a different task!");
+      println!("I too an running in a different task!");
     });
 
     spawn(proc() {
-      println("I too too an running in a different task!");
+      println!("I too too an running in a different task!");
     });
   }
   use_std_task_spawn();
@@ -71,7 +69,7 @@ fn main() {
     let ports = std::vec::from_fn(3, |init_val| {
       let (port, chan) = Chan::new();
       spawn(proc() {
-        println(init_val.to_str());
+        println!("{:s}", init_val.to_str());
         chan.send((|x: uint| x + 1)(init_val));
       });
       port
