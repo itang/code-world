@@ -1,21 +1,21 @@
 #[crate_id="main"];
 
+extern mod getopts;
 extern mod extra;
 
 use std::os;
-use extra::getopts::groups;
 
 mod rusttime;
 
 fn main() {
   let args = ~os::args();
   let opts = ~[
-    groups::optopt("p", "pattern", "date format pattern", "COLS"),
-    groups::optflag("v", "version", "display version information"),
-    groups::optflag("h", "help", "display this help text and exit")
+    getopts::optopt("p", "pattern", "date format pattern", "COLS"),
+    getopts::optflag("v", "version", "display version information"),
+    getopts::optflag("h", "help", "display this help text and exit")
   ];
 
-  let matches = match groups::getopts(args.tail(), opts) {
+  let matches = match getopts::getopts(args.tail(), opts) {
     Ok(m) => m,
     Err(e) => {
       error!("error: {:s}", e.to_err_msg());
@@ -24,7 +24,7 @@ fn main() {
   };
 
   let progname = args[0].clone();
-  let usage = groups::usage("time now by rust.", opts);
+  let usage = getopts::usage("time now by rust.", opts);
   let mode = if matches.opt_present("help") {
     Help
   }else if matches.opt_present("version") {

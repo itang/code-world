@@ -1,6 +1,6 @@
-extern mod extra;
+extern mod sync;
 
-use extra::future::Future;
+use sync::Future;
 
 fn main() {
   version1();

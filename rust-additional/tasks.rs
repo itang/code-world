@@ -2,7 +2,7 @@
  * task.
  */
 
-extern mod extra;
+extern mod sync;
 
 fn main() {
   // In general, all Rust code executes inside a task, including the `main` function.
@@ -91,7 +91,7 @@ fn main() {
       }
     }
 
-    let mut delayed_fib = extra::future::Future::spawn(proc() fib(30));
+    let mut delayed_fib = sync::Future::spawn(proc() fib(30));
     make_a_sandwich();
     println!("fib(30) = {:?}", delayed_fib.get());
 
@@ -104,7 +104,7 @@ fn main() {
       local_sum
     }
 
-    let mut futures = std::vec::from_fn(1000, |ind| extra::future::Future::spawn (proc(){ partial_sum(ind)}));
+    let mut futures = std::vec::from_fn(1000, |ind| sync::Future::spawn (proc(){ partial_sum(ind)}));
 
     let mut final_res = 0f64;
     for ft in futures.mut_iter() {
@@ -115,7 +115,7 @@ fn main() {
   futures();
 
   fn duplex_stream() {
-    fn stringifier(channel: &extra::comm::DuplexStream<~str,uint>){
+    fn stringifier(channel: &sync::DuplexStream<~str,uint>){
       loop {
         let value = channel.recv();
         channel.send(value.to_str());
@@ -123,7 +123,7 @@ fn main() {
       }
     }
 
-    let (from_child, to_child) = extra::comm::DuplexStream::new();
+    let (from_child, to_child) = sync::DuplexStream::new();
 
     spawn(proc() {
       stringifier(&to_child);
@@ -138,4 +138,22 @@ fn main() {
     assert!(from_child.recv() == ~"0");
   }
   duplex_stream();
+
+  test_select();
+}
+
+fn test_select() {
+  let (mut p1, c1) = Chan::new();
+  let (mut p2, c2) = Chan::new();
+  let sel = std::comm::Select::new();
+  let mut h1 = sel.add(&mut p1);
+  let mut h2 = sel.add(&mut p2);
+
+  spawn(proc() {
+    c2.send(2);
+    c1.send(1);
+  });
+  let id = sel.wait();
+  let data = if h1.id ==id { h1.recv() } else { h2.recv() };
+  println!("id: {}, data: {}", id, data);
 }

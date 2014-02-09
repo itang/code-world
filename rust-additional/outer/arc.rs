@@ -1,9 +1,9 @@
 #[allow(unused_unsafe)];
 
-extern mod extra;
+extern mod sync;
 
-use extra::arc::Arc;
-use extra::arc::RWArc;
+use sync::Arc;
+use sync::RWArc;
 
 fn main() {
   println!("Arc...");

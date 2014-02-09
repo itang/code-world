@@ -1,0 +1,18 @@
+2014年 02月 09日 星期日 19:07:12 CST
+run-go
+ParSum(100000): 4999950000
+0.50user 0.40system 0:00.43elapsed 212%CPU (0avgtext+0avgdata 459960maxresident)k
+0inputs+0outputs (0major+116049minor)pagefaults 0swaps
+run-rust
+par_sum(100000): 4999950000
+2.90user 2.12system 0:02.94elapsed 170%CPU (0avgtext+0avgdata 4892maxresident)k
+0inputs+0outputs (0major+101300minor)pagefaults 0swaps
+2014年 02月 09日 星期日 19:07:37 CST
+run-go
+ParSum(100000): 4999950000
+0.44user 0.46system 0:00.42elapsed 215%CPU (0avgtext+0avgdata 459908maxresident)k
+0inputs+0outputs (0major+116034minor)pagefaults 0swaps
+run-rust
+par_sum(100000): 4999950000
+3.34user 2.78system 0:03.56elapsed 171%CPU (0avgtext+0avgdata 4912maxresident)k
+0inputs+0outputs (0major+101302minor)pagefaults 0swaps

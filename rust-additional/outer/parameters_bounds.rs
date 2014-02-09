@@ -13,7 +13,7 @@ impl<'a, T: Image> Sprite<T> {
         Sprite { bitmap: input, local_buf: ~[]}
     }
 
-    fn rotate_bitmap(&'a mut self, degrees: uint) {
+    fn rotate_bitmap(&'a mut self, _degrees: uint) {
         let pixels = (*self).bitmap.get_pixels();
         (*self).local_buf.clear();
         (*self).local_buf.push_all(pixels);
