@@ -1,6 +1,6 @@
 #[allow(unused_unsafe)];
 
-extern mod sync;
+extern crate sync;
 
 use sync::Arc;
 use sync::RWArc;

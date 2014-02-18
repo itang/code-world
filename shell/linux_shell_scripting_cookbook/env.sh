@@ -14,6 +14,7 @@ echo "PWD    $PWD"
 echo "USER   $USER"
 echo "HOME   $HOME"
 echo "UID    $UID"
+echo "UID(id -u)    $(id -u)"
 echo "SHELL  $SHELL"
 #sudo cat /proc/1/environ
 
@@ -26,3 +27,4 @@ echo pid $$
 
 echo
 echo '$@:' "$@"
+echo '$*:' "$*"

@@ -1,13 +1,13 @@
 fn main() {
-  5.times (|| {
-    do spawn { println("Hello"); }
-  });
+  for _ in range(0, 5) {
+    spawn(proc() { println!("Hello"); });
+  }
 
   let (port, chan) :(Port<int>, Chan<int>) = Chan::new();
   
-  do spawn || {
+  spawn(proc() {
     chan.send(100); 
-  }
+  });
 
-  println(port.recv().to_str());
+  println!("{:d}", port.recv());
 }

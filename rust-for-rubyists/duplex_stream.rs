@@ -1,7 +1,6 @@
-extern mod extra;
+extern crate sync;
 
-use std::io::println;
-use extra::comm::DuplexStream;
+use sync::DuplexStream;
 
 fn plus_one(channel: &DuplexStream<int, int>) {
   let mut value: int;
@@ -15,9 +14,9 @@ fn plus_one(channel: &DuplexStream<int, int>) {
 fn main() {
   let (from_child, to_child) = DuplexStream::new();
 
-  do spawn {
+  spawn(proc() {
     plus_one(&to_child);
-  }
+  });
 
   from_child.try_send(1);
   from_child.try_send(100);
@@ -25,8 +24,8 @@ fn main() {
   from_child.send(10000);
   from_child.send(0);
 
-  5.times(|| {
+  for _ in range(0, 5) {
     let answer = from_child.recv();
-    println(answer.to_str());
-  });
+    println!("{:d}", answer);
+  }
 }

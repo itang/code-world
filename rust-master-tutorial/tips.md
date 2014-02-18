@@ -128,3 +128,18 @@ inferred from the type, these static strings are not mutable.
 ```
 
 - Trait objects use dynamic dispatch and vtables.
+
+- rustc flags
+  --emit=[asm,ir,bc,obj,link]
+  --crate-type=[dylib,rlib,staticlib,bin,lib]
+  --out-dir
+  -o
+
+- println! set color 
+    println!("[33;1mRequest[0m");
+
+- struct copy
+impl Clone for Uuid {
+    /// Returns a copy of the UUID
+    fn clone(&self) -> Uuid { *self } // Uuid { *self } <- Uuid { bytes: self.bytes(.clone()?) }
+}

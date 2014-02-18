@@ -4,7 +4,7 @@
 /// rustime.
 ///
 
-extern mod extra;
+extern crate extra;
 
 use extra::time;
 

@@ -6,8 +6,8 @@ enum Monster {
 impl Monster {
   fn attack(&self) {
     match *self {
-      ScubaArgentine(l,s,c,w) => println(format!("The monster attacks for {:d} damage.", w)),
-      IndustrialRaverMonkey(l, s, c, w) => println(format!("The monster attacks for {:d} damage.", w))
+      ScubaArgentine(_l,_s,_c,w) => println!("The monster attacks for {:d} damage.", w),
+      IndustrialRaverMonkey(_l, _s, _c, w) => println!("The monster attacks for {:d} damage.", w)
     }
   }
 }

@@ -1,6 +1,6 @@
 // TODO:
 // Should be Sendable ?
-extern mod extra;
+extern crate extra;
 
 use std::clone::Clone;
 use extra::time;
@@ -56,7 +56,8 @@ fn main() {
     println!("{:?}", d);
 
     assert!(!d.is_forced());
-    assert_eq!(0, count);
+    let c1 = count;
+    assert_eq!(0, c1);
 
     let s1 = time::now();
     let v1 = d.force();
@@ -65,7 +66,8 @@ fn main() {
     let s3 = time::now();
 
     assert!(d.is_forced());
-    assert_eq!(1, count);
+    let c2 = count;
+    assert_eq!(1, c2);
 
     println!("v1: {:?}", v1);
     println!("v2: {:?}", v2);

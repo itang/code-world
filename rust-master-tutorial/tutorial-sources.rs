@@ -802,7 +802,12 @@ fn dereferenced() {
   //assert_eq!(size_of::<~int>(), size_of::<~@[int]>());
  // assert_eq!(size_of::<~int>(),  size_of::<@[int]>());
   assert_eq!(size_of::<int>() * 10, size_of::<[int, ..10]>());
+  assert_eq!(~"&~[1, 3, 5]", format!("{:?}", arr.borrow()));
   assert_eq!((1,5), (arr.borrow()[0], arr.borrow()[2]));
+
+  let arr1 = std::rc::Rc::new([1,2,3]);
+  assert_eq!(~"&[1, 2, 3]", format!("{:?}", arr1.borrow()));
+  assert_eq!(1, arr1.borrow()[0]);
 }
 
 fn vectors() {

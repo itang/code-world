@@ -1,7 +1,7 @@
 #[feature(macro_rules)];
 #[feature(struct_variant)];
 
-extern mod collections;
+extern crate collections;
 
 use std::hashmap::HashMap;
 use collections::TreeMap;
@@ -12,6 +12,9 @@ fn main() {
     test_destructuring_pattern_matching();
     test_conv_from_str();
     test_hashmap();
+
+    // 2014-02-11
+    test_params_builder();
  }
 
 // In order to have a default implementaton of to_str() you need to add #[deriving(, Rand)]
@@ -192,6 +195,7 @@ fn test_conv_from_str() {
     let a = from_str::<int>("1").unwrap();
     assert_eq!(1, a);
     assert_eq!(None, from_str::<int>("1a1"));
+    assert!(from_str::<uint>("1aa1").is_none());
 
     struct Name(~str);
     impl FromStr for Name {
@@ -201,8 +205,17 @@ fn test_conv_from_str() {
     }
     let n: Option<Name> = from_str::<Name>("hello");
     println!("name: {:?}", n);
-}
 
+    let f : f64 = from_str("1.2").unwrap(); // type inter
+    assert_eq!(1.2, f);
+
+    assert_eq!(10, from_str::<int>("10").unwrap_or(10));
+
+    match from_str::<int>("100") {
+        None => unreachable!(),
+        Some(v) => assert_eq!(100, v)
+    }
+}
 
 fn test_hashmap() {
     fn add_to_map(map: &mut HashMap<~str, uint>, k: &str, v: uint) {
@@ -343,4 +356,35 @@ fn test_hashmap() {
         assert_eq!(~[10, 20], numbers);
     }
     test_treemap();
+}
+
+#[deriving(Eq)]
+struct ParamsBuilder {
+    name: ~str,
+    age: int
+}
+
+impl ParamsBuilder {
+    fn default() -> ParamsBuilder{
+        ParamsBuilder { name: ~"", age: 0 }
+    }
+
+    fn name(mut self, n: ~str) -> ParamsBuilder {
+        self.name = n;
+        self
+    }
+
+    fn age(mut self, a: int) -> ParamsBuilder {
+        self.age = a;
+        self
+    }
+}
+
+fn test_params_builder() {
+    let pb = ParamsBuilder::default().name(~"itang").age(10);
+    assert_eq!(ParamsBuilder{ name:~"itang", age: 10}, pb);
+
+    let pb1 = ParamsBuilder { name:~"tqibm", ..pb };
+    assert_eq!(~"tqibm", pb1.name);
+    assert_eq!(10, pb1.age);
 }

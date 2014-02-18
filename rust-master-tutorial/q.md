@@ -206,3 +206,6 @@ struct Delay<T> {
             Some(ref v) => (*v).clone()
         }
     }
+
+-    //let f2 = f1;            //when impl Drop,  use of moved value: `f1` ??
+    let mut f2 = f1.clone();         

@@ -1,5 +1,5 @@
 // Sendable
-extern mod extra;
+extern crate extra;
 
 use std::clone::Clone;
 use extra::time;

@@ -2,7 +2,7 @@
  * task.
  */
 
-extern mod sync;
+extern crate sync;
 
 fn main() {
   // In general, all Rust code executes inside a task, including the `main` function.
@@ -48,7 +48,7 @@ fn main() {
   pipes();
 
   fn shared_chan() {
-    let (port, chan) = SharedChan::new();
+    let (port, chan) = Chan::new();
     let MAX = 10000;
     for inti_val in range(0u, MAX) {
       // Create a new channel handle to distribute to th echild task
@@ -146,14 +146,14 @@ fn test_select() {
   let (mut p1, c1) = Chan::new();
   let (mut p2, c2) = Chan::new();
   let sel = std::comm::Select::new();
-  let mut h1 = sel.add(&mut p1);
-  let mut h2 = sel.add(&mut p2);
+  let mut h1 = sel.handle(&mut p1);
+  let mut h2 = sel.handle(&mut p2);
 
   spawn(proc() {
     c2.send(2);
     c1.send(1);
   });
   let id = sel.wait();
-  let data = if h1.id ==id { h1.recv() } else { h2.recv() };
+  let data = if h1.id() ==id { h1.recv() } else { h2.recv() };
   println!("id: {}, data: {}", id, data);
 }

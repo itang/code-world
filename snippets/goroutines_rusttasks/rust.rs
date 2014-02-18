@@ -2,7 +2,7 @@ use private::times;
 use range_zero = private::range_with_start_zero;
 
 pub fn par_sum(to: int) -> int {
-    let (port, chan) = SharedChan::new();
+    let (port, chan) = Chan::new();
     times(to, |i| {
       let c = chan.clone();
       spawn(proc() { c.send(i); });

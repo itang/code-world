@@ -3,7 +3,7 @@
 #[allow(unused_variable)];
 #[allow(unused_mut)];
 
-extern mod extra;
+extern crate extra;
 use std::io::BufferedReader;
 use std::io::File;
 use std::io::IoResult;

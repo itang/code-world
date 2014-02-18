@@ -1,4 +1,4 @@
-extern mod sync;
+extern crate sync;
 
 use sync::Future;
 

@@ -1,7 +1,7 @@
 #[crate_id="main"];
 
-extern mod getopts;
-extern mod extra;
+extern crate getopts;
+extern crate extra;
 
 use std::os;
 
