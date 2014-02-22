@@ -124,6 +124,8 @@ fn test_destructuring_pattern_matching() {
     }
 
     fn test_vectors() {
+        // removing unique vectors from the language
+        /*
         let v = ~[1,2,3,4,5];
         match v {
             [] => println!("empty"),
@@ -156,6 +158,46 @@ fn test_destructuring_pattern_matching() {
         match ss {
             [~"abc"] => unreachable!(),
             [a, _b] => assert_eq!(~"abc", a),
+            _ => unreachable!()
+        }
+        */
+        let v = ~[1,2,3,4,5];
+
+        match v.len() {
+            0 => println!("empty"),
+            1 => println!("{}", v[0]),
+            _ => println!("first:{}, second:{}, rest:{:?}", v[0], v[1], v.tail())
+        }
+
+        match v.len() {
+            0 => unreachable!(),
+            _ => assert_eq!(1, v[0])
+        }
+
+        match v.len() {
+            0 => unreachable!(),
+            _ => assert_eq!(&5, v.last().unwrap()),
+        }
+
+        match v.len() {
+            0 => unreachable!(),
+            1 => unreachable!(),
+            _ => {
+                let first = v[0];
+                let last = v.last().unwrap();
+                let middle = v.slice(1, v.len()-1);
+                println!("middle: {:?}", middle);
+                assert_eq!(1, first);
+                assert_eq!(&5, last);
+                assert_eq!(&[2,3,4], middle);
+            }
+        }
+
+
+        let ss = ~[~"abc", ~"def"];
+        match ss.len() {
+            1 => unreachable!(),
+            2 => assert_eq!(~"abc", ss[0]),
             _ => unreachable!()
         }
     }

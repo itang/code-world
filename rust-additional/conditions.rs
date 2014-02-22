@@ -83,25 +83,19 @@ fn read_int_pairs() -> IoResult<~[(int,int)]> {
   //Path takes a generic by-value, rather than by reference
   //let _g = std::io::ignore_io_error();
   let path = Path::new(&"data/numbers.txt");
-  let mut reader = BufferedReader::new(if_ok!(File::open(&path)));
+  let mut reader = BufferedReader::new(try!(File::open(&path)));
 
   //1. Iterate over the lines of our file.
   for line in reader.lines() {
     //2. Split the line into fields ("world").
     let fields = line.words().to_owned_vec();
     //3. Match the vector of fields against a vector pattern.
-    match fields {
-      //4. When the line had two fields:
-      [a, b] => {
-        // 5. Try parsing both fields as ints.
-        match (from_str::<int>(a), from_str::<int>(b)) {
+    if fields.len() == 2 {
+      match (from_str::<int>(fields[0]), from_str::<int>(fields[1])) {
           //6. If parsing successed for both, push both.
           (Some(a), Some(b)) => pairs.push((a, b)),
           _ => ()
         }
-      }
-      //8. Ignore lines that don't have 2 fields.
-      _ => ()
     }
   }
 
@@ -113,12 +107,13 @@ fn read_int_pairs_try() -> IoResult<~[(int, int)]>{
   //let _g = std::io::ignore_io_error();
   let path = Path::new(&"data/numbers.txt");
 
-  let mut reader = BufferedReader::new(if_ok!(File::open(&path)));
+  let mut reader = BufferedReader::new(try!(File::open(&path)));
   for line in reader.lines() {
-    match line.words().to_owned_vec() {
-      [a, b] => pairs.push((from_str::<int>(a).unwrap(),
-        from_str::<int>(b).unwrap())),
-      _ => fail!()
+    let fields = line.words().to_owned_vec();
+    if fields.len() == 2{
+      pairs.push((from_str::<int>(fields[0]).unwrap(), from_str::<int>(fields[1]).unwrap()));
+    }else{
+      fail!()
     }
   }
   Ok(pairs)
