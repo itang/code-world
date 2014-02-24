@@ -1,8 +1,7 @@
 // Sendable
-extern crate extra;
+extern crate time;
 
 use std::clone::Clone;
-use extra::time;
 
 trait IDelay<T> {
     fn force(&mut self) -> T;

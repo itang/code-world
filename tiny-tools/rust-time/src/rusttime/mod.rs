@@ -4,9 +4,7 @@
 /// rustime.
 ///
 
-extern crate extra;
-
-use extra::time;
+extern crate time;
 
 pub static PATTERN_DEFAULT: &'static str = "%Y-%m-%d %H:%M:%S";
 

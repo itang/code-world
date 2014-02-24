@@ -432,16 +432,16 @@ fn data_structures_enum() {
   assert!( match Blue { Blue => true, _ => false} && 0x0000ff == Blue as int);
 
   enum Type {
-    t1 = 0,
-    t2 = 1 << 1,
-    t3 = 1 << 2,
-    t4 = 1 << 3
+    T1 = 0,
+    T2 = 1 << 1,
+    T3 = 1 << 2,
+    T4 = 1 << 3
   }
 
-  assert!(0 == (t1 as int));
-  assert!(2 == (t2 as int));
-  assert!(4 == (t3 as int));
-  assert!(8 == (t4 as int));
+  assert!(0 == (T1 as int));
+  assert!(2 == (T2 as int));
+  assert!(4 == (T3 as int));
+  assert!(8 == (T4 as int));
 
   enum Category {
     G1, G2
