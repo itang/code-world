@@ -3,7 +3,7 @@
 
 extern crate collections;
 
-use std::hashmap::HashMap;
+use collections::HashMap;
 use collections::TreeMap;
 
 fn main() {

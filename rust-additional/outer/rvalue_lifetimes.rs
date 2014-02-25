@@ -1,4 +1,6 @@
-use std::hashmap::HashMap;
+extern crate collections;
+
+use collections::HashMap;
 use std::cell::RefCell;
 
 fn main () {

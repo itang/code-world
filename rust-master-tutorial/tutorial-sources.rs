@@ -1,5 +1,9 @@
 #[feature(managed_boxes)];
 
+extern crate collections;
+
+use collections::HashMap;
+
 use std::f64;
 use std::num::atan;
 use std::mem::size_of;
@@ -7,7 +11,6 @@ use std::rc::Rc;
 use std::gc::Gc;
 use std::rand::random;
 use std::task::spawn;
-use std::hashmap::HashMap;
 use puts = std::io::println;
 
 fn main() {
