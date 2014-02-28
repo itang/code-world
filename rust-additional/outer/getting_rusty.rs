@@ -6,6 +6,8 @@ extern crate collections;
 use collections::HashMap;
 use collections::TreeMap;
 
+use std::from_str::FromStr;
+
 fn main() {
     test_ToStr();
     test_macro();
@@ -18,7 +20,7 @@ fn main() {
  }
 
 // In order to have a default implementaton of to_str() you need to add #[deriving(, Rand)]
-#[deriving(ToStr, Rand)]
+#[deriving(Rand,Show)]
 enum Weapons {
     Sword,
     Club,
