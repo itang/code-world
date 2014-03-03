@@ -154,7 +154,7 @@ fn iterator_adaptors() {
     println!("== reverse_");
     let mut ys = [1,2,3,4,5];
     ys.mut_iter().reverse_();
-    assert_eq!(ys, [5,4,3,2,1]);
+    assert!(ys == [5,4,3,2,1]);
    })();
 
   (||{

@@ -402,7 +402,7 @@ fn test_hashmap() {
     test_treemap();
 }
 
-#[deriving(Eq)]
+#[deriving(Eq, Show)]
 struct ParamsBuilder {
     name: ~str,
     age: int

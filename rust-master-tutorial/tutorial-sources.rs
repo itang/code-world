@@ -816,11 +816,11 @@ fn dereferenced() {
 fn vectors() {
   // A fixed-size vector
   let numbers = [1, 2, 3];
-  assert_eq!([1, 2, 3], numbers);
+  assert!([1, 2, 3] == numbers);
 
   let more_numbers = numbers;
-  assert_eq!([1,2,3], more_numbers);
-  assert_eq!([1,2,3], numbers);
+  assert!([1,2,3] == more_numbers);
+  assert!([1,2,3] == numbers);
   // assert!(&more_numbers == &numbers); // failed to find an implementation of trait std::cmp::Eq for [int, .. 3]
 
   // the type of a fixed-size vector is writeten as '[Type, ..length]'
@@ -828,14 +828,14 @@ fn vectors() {
   //five_zeroes[0] = 10; // cannot assign to immutable vec content
   let mut fz = five_zeroes;
   fz[0] = 10;
-  assert_eq!([0,0,0,0,0], five_zeroes);
-  assert_eq!([10,0,0,0,0], fz);
+  assert!([0,0,0,0,0] == five_zeroes);
+  assert!([10,0,0,0,0] == fz);
   fz.iter().advance(|x| {
     x.to_str();
     true
   });
   let fz: [int, ..3] = [0, 1, 2];
-  assert_eq!([0, 1, 2], fz);
+  assert!([0, 1, 2] == fz);
   let mut mfz = fz; // value clone
   mfz[0] = 10;
   assert!(fz[0] == 0);
@@ -937,22 +937,22 @@ fn ownership_escape_hatches() {
   let y = x.clone(); // a new owner
   let z = x; // this moves 'x' into 'z', rather than creating a new owner
 
-  assert_eq!(*y.borrow(), [1,2,3,4,5,6,7,8,9,10]);
-  assert_eq!(*z.borrow(), [1,2,3,4,5,6,7,8,9,10]);
+  assert!(*y.borrow() == [1,2,3,4,5,6,7,8,9,10]);
+  assert!(*z.borrow() == [1,2,3,4,5,6,7,8,9,10]);
 
   // the variable is mutable, but not the contents of the box
   let mut a = Rc::new([10,9,8,7,6,5,4,3,2,1]); 
-  assert_eq!([10,9,8,7,6,5,4,3,2,1], *a.borrow());
+  assert!([10,9,8,7,6,5,4,3,2,1] == *a.borrow());
   a = z;
-  assert_eq!([1,2,3,4,5,6,7,8,9,10], *a.borrow());
+  assert!([1,2,3,4,5,6,7,8,9,10] == *a.borrow());
 
   let x1 = Gc::new([1,2,3,4,5,6,7,8,9,10]);
   let y1 = x1; // does not perform a move, unlike with 'Rc'
   let z1 = x1;
 
-  assert_eq!(*x1.borrow(), [1,2,3,4,5,6,7,8,9,10]);
-  assert_eq!(*y1.borrow(), [1,2,3,4,5,6,7,8,9,10]);
-  assert_eq!(*z1.borrow(), [1,2,3,4,5,6,7,8,9,10]);
+  assert!(*x1.borrow() == [1,2,3,4,5,6,7,8,9,10]);
+  assert!(*y1.borrow() == [1,2,3,4,5,6,7,8,9,10]);
+  assert!(*z1.borrow() == [1,2,3,4,5,6,7,8,9,10]);
 }
 
 fn closures() {
