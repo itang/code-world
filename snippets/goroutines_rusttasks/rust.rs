@@ -10,10 +10,11 @@ pub fn par_sum(to: int) -> int {
     range_zero(to).fold(0, |s, _|  s + port.recv() )
 }
 
+
 #[cfg(not(test))]
 fn main() {
-    let N = 100_000;
-    println!("par_sum({:d}): {:d}", N, par_sum(N));
+    let n:int = 100_000;
+    println!("par_sum({:d}): {:d}", n, par_sum(n));
 }
 
 ///////////////////////////////////////////////////

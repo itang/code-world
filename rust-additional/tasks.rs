@@ -49,8 +49,8 @@ fn main() {
 
   fn shared_chan() {
     let (port, chan) = Chan::new();
-    let MAX = 10000;
-    for inti_val in range(0u, MAX) {
+    let max = 10000;
+    for inti_val in range(0u, max) {
       // Create a new channel handle to distribute to th echild task
       let child_chan = chan.clone();
       spawn(proc() {
@@ -58,7 +58,7 @@ fn main() {
       });
     }
     let mut result = 0u;
-    for _ in range(0, MAX) {
+    for _ in range(0, max) {
       result += port.recv();
     }
     println!("result:{}", result);
@@ -96,9 +96,9 @@ fn main() {
     println!("fib(30) = {:?}", delayed_fib.get());
 
     fn partial_sum(start: uint) -> f64 {
-      let M = 100000;
+      let m = 100000;
       let mut local_sum = 0f64;
-      for num in range(start*M, (start+1)*M){
+      for num in range(start*m, (start+1)*m){
         local_sum += std::f64::pow(num as f64 + 1.0, -2.0);
       }
       local_sum
