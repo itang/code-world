@@ -1,6 +1,7 @@
 #[feature(managed_boxes)];
 
 extern crate collections;
+extern crate rand;
 
 use collections::HashMap;
 
@@ -9,7 +10,7 @@ use std::num::atan;
 use std::mem::size_of;
 use std::rc::Rc;
 use std::gc::Gc;
-use std::rand::random;
+use rand::random;
 use std::task::spawn;
 use puts = std::io::println;
 

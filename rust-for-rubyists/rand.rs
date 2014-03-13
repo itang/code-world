@@ -1,5 +1,6 @@
-use std::rand;
-use std::rand::{task_rng, Rng};
+extern crate rand;
+
+use rand::{task_rng, Rng};
 use std::io::println;
 
 fn main() {
