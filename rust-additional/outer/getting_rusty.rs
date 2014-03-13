@@ -302,6 +302,7 @@ fn test_hashmap() {
      }
     create_insert_find();
 
+/*
     fn test_mangle() {
         let mut map = HashMap::<~str, uint>::new();
         assert!(!map.contains_key(&~"foo"));
@@ -323,6 +324,7 @@ fn test_hashmap() {
         assert_eq!(*map.get(&~"foo"), 9);
     }
     test_mangle();
+*/
 
     fn test_get() {
         let mut map = HashMap::<~str, uint>::new();
