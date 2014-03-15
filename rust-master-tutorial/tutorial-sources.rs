@@ -806,12 +806,12 @@ fn dereferenced() {
   //assert_eq!(size_of::<~int>(), size_of::<~@[int]>());
  // assert_eq!(size_of::<~int>(),  size_of::<@[int]>());
   assert_eq!(size_of::<int>() * 10, size_of::<[int, ..10]>());
-  assert_eq!(~"&~[1, 3, 5]", format!("{:?}", arr.borrow()));
-  assert_eq!((1,5), (arr.borrow()[0], arr.borrow()[2]));
+  assert_eq!(~"~[1, 3, 5]", format!("{:?}", *arr));
+  assert_eq!((1,5), ((*arr)[0], (*arr)[2]));
 
   let arr1 = std::rc::Rc::new([1,2,3]);
-  assert_eq!(~"&[1, 2, 3]", format!("{:?}", arr1.borrow()));
-  assert_eq!(1, arr1.borrow()[0]);
+  assert_eq!(~"[1, 2, 3]", format!("{:?}", *arr1));
+  assert_eq!(1, (*arr1)[0]);
 }
 
 fn vectors() {
@@ -938,14 +938,14 @@ fn ownership_escape_hatches() {
   let y = x.clone(); // a new owner
   let z = x; // this moves 'x' into 'z', rather than creating a new owner
 
-  assert!(*y.borrow() == [1,2,3,4,5,6,7,8,9,10]);
-  assert!(*z.borrow() == [1,2,3,4,5,6,7,8,9,10]);
+  assert!(*y == [1,2,3,4,5,6,7,8,9,10]);
+  assert!(*z == [1,2,3,4,5,6,7,8,9,10]);
 
   // the variable is mutable, but not the contents of the box
   let mut a = Rc::new([10,9,8,7,6,5,4,3,2,1]); 
-  assert!([10,9,8,7,6,5,4,3,2,1] == *a.borrow());
+  assert!([10,9,8,7,6,5,4,3,2,1] == *a);
   a = z;
-  assert!([1,2,3,4,5,6,7,8,9,10] == *a.borrow());
+  assert!([1,2,3,4,5,6,7,8,9,10] == *a);
 
   let x1 = Gc::new([1,2,3,4,5,6,7,8,9,10]);
   let y1 = x1; // does not perform a move, unlike with 'Rc'

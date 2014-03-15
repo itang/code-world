@@ -88,15 +88,20 @@ fn read_int_pairs() -> IoResult<~[(int,int)]> {
   //1. Iterate over the lines of our file.
   for line in reader.lines() {
     //2. Split the line into fields ("world").
-    let fields = line.words().to_owned_vec();
-    //3. Match the vector of fields against a vector pattern.
-    if fields.len() == 2 {
-      match (from_str::<int>(fields[0]), from_str::<int>(fields[1])) {
-          //6. If parsing successed for both, push both.
-          (Some(a), Some(b)) => pairs.push((a, b)),
-          _ => ()
-        }
-    }
+    match line {
+      Ok(it) => {
+        let fields = it.words().to_owned_vec();
+        //3. Match the vector of fields against a vector pattern.
+        if fields.len() == 2 {
+          match (from_str::<int>(fields[0]), from_str::<int>(fields[1])) {
+              //6. If parsing successed for both, push both.
+              (Some(a), Some(b)) => pairs.push((a, b)),
+              _ => ()
+            }
+          }
+        },
+        _ =>()
+      }
   }
 
   Ok(pairs)
@@ -109,11 +114,16 @@ fn read_int_pairs_try() -> IoResult<~[(int, int)]>{
 
   let mut reader = BufferedReader::new(try!(File::open(&path)));
   for line in reader.lines() {
-    let fields = line.words().to_owned_vec();
-    if fields.len() == 2{
-      pairs.push((from_str::<int>(fields[0]).unwrap(), from_str::<int>(fields[1]).unwrap()));
-    }else{
-      fail!()
+    match line {
+      Ok(it) => {
+        let fields = it.words().to_owned_vec();
+        if fields.len() == 2{
+          pairs.push((from_str::<int>(fields[0]).unwrap(), from_str::<int>(fields[1]).unwrap()));
+        }else{
+          fail!()
+        }
+      },
+      _ => ()
     }
   }
   Ok(pairs)

@@ -12,7 +12,7 @@ fn plus_one(channel: &DuplexStream<int, int>) {
 }
 
 fn main() {
-  let (from_child, to_child) = DuplexStream::new();
+  let (from_child, to_child) = sync::duplex();
 
   spawn(proc() {
     plus_one(&to_child);

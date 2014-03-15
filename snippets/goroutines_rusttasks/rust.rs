@@ -2,12 +2,12 @@ use private::times;
 use range_zero = private::range_with_start_zero;
 
 pub fn par_sum(to: int) -> int {
-    let (port, chan) = Chan::new();
+    let (tx, rx) = channel();
     times(to, |i| {
-      let c = chan.clone();
+      let c = tx.clone();
       spawn(proc() { c.send(i); });
     });
-    range_zero(to).fold(0, |s, _|  s + port.recv() )
+    range_zero(to).fold(0, |s, _|  s + rx.recv() )
 }
 
 

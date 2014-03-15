@@ -33,49 +33,49 @@ fn main() {
   capture();
 
   fn pipes() {
-    let (port, chan): (Port<int>, Chan<int>) = Chan::new();
+    let (tx, rx): (Sender<int>, Receiver<int>) = channel();
     spawn(proc() {
       fn some_expensive_computation() -> int {
         100.0 as int
       }
       let result = some_expensive_computation();
-      chan.send(result);
+      tx.send(result);
     });
 
-    let ret = port.recv();
+    let ret = rx.recv();
     println!("ret:{}", ret);
   }
   pipes();
 
-  fn shared_chan() {
-    let (port, chan) = Chan::new();
+  fn shared_tx() {
+    let (tx, rx) = channel();
     let max = 10000;
     for inti_val in range(0u, max) {
       // Create a new channel handle to distribute to th echild task
-      let child_chan = chan.clone();
+      let child_tx = tx.clone();
       spawn(proc() {
-        child_chan.send((|x| x)(inti_val));
+        child_tx.send((|x| x)(inti_val));
       });
     }
     let mut result = 0u;
     for _ in range(0, max) {
-      result += port.recv();
+      result += rx.recv();
     }
     println!("result:{}", result);
   }
-  shared_chan();
+  shared_tx();
 
   fn advance() {
-    let ports = std::vec::from_fn(3, |init_val| {
-      let (port, chan) = Chan::new();
+    let rxs = std::vec::from_fn(3, |init_val| {
+      let (tx, rx) = channel();
       spawn(proc() {
         println!("{:s}", init_val.to_str());
-        chan.send((|x: uint| x + 1)(init_val));
+        tx.send((|x: uint| x + 1)(init_val));
       });
-      port
+      rx
     });
 
-    let result = ports.iter().fold(0, |a, p| a + p.recv());
+    let result = rxs.iter().fold(0, |a, p| a + p.recv());
     println!("advance, result: {}", result);
   }
   advance();
@@ -123,7 +123,7 @@ fn main() {
       }
     }
 
-    let (from_child, to_child) = sync::DuplexStream::new();
+    let (from_child, to_child) = sync::duplex();
 
     spawn(proc() {
       stringifier(&to_child);
@@ -143,15 +143,16 @@ fn main() {
 }
 
 fn test_select() {
-  let (mut p1, c1) = Chan::new();
-  let (mut p2, c2) = Chan::new();
+  //TODO FIXME
+  let (tx1, rx1) = channel();
+  let (tx2, rx2) = channel();
   let sel = std::comm::Select::new();
-  let mut h1 = sel.handle(&mut p1);
-  let mut h2 = sel.handle(&mut p2);
+  let mut h1 = sel.handle(&rx1);
+  let mut h2 = sel.handle(&rx2);
 
   spawn(proc() {
-    c2.send(2);
-    c1.send(1);
+    tx1.send(2);
+    tx2.send(1);
   });
   let id = sel.wait();
   let data = if h1.id() ==id { h1.recv() } else { h2.recv() };

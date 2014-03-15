@@ -7,6 +7,6 @@ fn main() {
   let mut stdin = BufferedReader::new(io::stdin());
   for line in stdin.lines() {
     println("YOU TYPED:");
-    print(line);
+    print(line.unwrap());
   }
 }

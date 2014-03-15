@@ -3,11 +3,11 @@ fn main() {
     spawn(proc() { println!("Hello"); });
   }
 
-  let (port, chan) :(Port<int>, Chan<int>) = Chan::new();
+  let (tx, rx) :(Sender<int>, Receiver<int>) = channel();
   
   spawn(proc() {
-    chan.send(100); 
+    tx.send(100); 
   });
 
-  println!("{:d}", port.recv());
+  println!("{:d}", rx.recv());
 }
