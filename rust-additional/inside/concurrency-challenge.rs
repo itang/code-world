@@ -1,3 +1,5 @@
+#[allow(deprecated_owned_vector)];
+
 extern crate sync;
 
 use sync::Future;

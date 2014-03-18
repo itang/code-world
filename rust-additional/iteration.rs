@@ -77,7 +77,7 @@ fn container_iterators() {
   }
 
   println!("unique vector iter:");
-  let v3 = ~[6,7,8];
+  let v3 = std::vec_ng::Vec::from_slice(&[6,7,8]);
   for i in v3.iter() {
     print!("{:d}", *i);
   }
@@ -95,7 +95,7 @@ fn container_iterators() {
   println!("{:?}", v4);
 
   println!("move_iter:");
-  let v5 = ~[~"a", ~"b"];
+  let v5 = std::vec_ng::Vec::from_slice(&[~"a", ~"b"]);
   for i in v5.move_iter() {
     print!("{:s},", i);
   }
@@ -133,8 +133,8 @@ fn iterator_adaptors() {
    (||{
      println!("== Conversion");
      let xs = [0,1,1,2,3,5,8];
-     let ys = xs.rev_iter().skip(1).map(|&x| x * 2).collect::<~[int]>();
-     assert_eq!(ys, ~[10,6,4,2,2,0]);
+     let ys = xs.rev_iter().skip(1).map(|&x| x * 2).collect::<std::vec_ng::Vec<int>>();
+     assert_eq!(ys, std::vec_ng::Vec::from_slice(&[10,6,4,2,2,0]));
    })();
 
    (||{
@@ -160,7 +160,7 @@ fn iterator_adaptors() {
   (||{
     println!("== Random-access iterators");
     let xs = [1,2,3,4,5];
-    let ys = ~[7,9,11];
+    let ys = std::vec_ng::Vec::from_slice(&[7,9,11]);
     let it = xs.iter().chain(ys.iter());
     println!("{:?}", it.idx(0));
     println!("{:?}", it.idx(7));

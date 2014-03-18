@@ -1,7 +1,12 @@
 #[crate_id="main"];
 
+#[allow(deprecated_owned_vector)];
+#[feature(macro_rules, phase)];
+
 extern crate getopts;
-extern crate extra;
+
+#[phase(syntax, link)]
+extern crate log;
 
 use std::os;
 

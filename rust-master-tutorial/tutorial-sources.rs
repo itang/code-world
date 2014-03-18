@@ -1,7 +1,11 @@
 #[feature(managed_boxes)];
+#[allow(deprecated_owned_vector)];
+#[feature(phase)];
 
 extern crate collections;
 extern crate rand;
+#[phase(syntax, link)]
+extern crate log;
 
 use collections::HashMap;
 
@@ -457,7 +461,7 @@ fn data_structures_enum() {
 
 fn tuples() {
   let mytup: (int, int, f64) = (10, 20, 30.0);
-  println!("log_enabled!(std::logging::INFO): {}", log_enabled!(std::logging::INFO));
+  println!("log_enabled!(std::logging::INFO): {}", log_enabled!(log::INFO));
   match mytup {
     (a, b, c) => info!("sum of {}", a + b + (c as int))
   }

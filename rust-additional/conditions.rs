@@ -2,8 +2,8 @@
 #[allow(unreachable_code)];
 #[allow(unused_variable)];
 #[allow(unused_mut)];
+#[allow(deprecated_owned_vector)];
 
-extern crate extra;
 use std::io::BufferedReader;
 use std::io::File;
 use std::io::IoResult;
@@ -51,8 +51,8 @@ fn main() {
   let sv = [1,2,3];
   let mut msv = [1,2,3];
 
-  let ov = ~[1,2,3];
-  let mut mov = ~[1,2,3];
+  let ov = std::vec_ng::Vec::from_slice(&[1,2,3]);
+  let mut mov = std::vec_ng::Vec::from_slice(&[1,2,3]);
 
   let bv = &[1,2,3];
   spawn(proc() {
@@ -64,7 +64,7 @@ fn main() {
   });
 }
 
-fn common(msg: &str, c: || -> IoResult<~[(int, int)]>) {
+fn common(msg: &str, c: || -> IoResult<std::vec_ng::Vec<(int, int)>>) {
   println!("******** {:s}", msg);
   let pairs =c();
   match pairs {
@@ -77,8 +77,8 @@ fn common(msg: &str, c: || -> IoResult<~[(int, int)]>) {
   }
 }
 
-fn read_int_pairs() -> IoResult<~[(int,int)]> {
-  let mut pairs = ~[];
+fn read_int_pairs() -> IoResult<std::vec_ng::Vec<(int, int)>> {
+  let mut pairs = std::vec_ng::Vec::new();
 
   //Path takes a generic by-value, rather than by reference
   //let _g = std::io::ignore_io_error();
@@ -107,8 +107,8 @@ fn read_int_pairs() -> IoResult<~[(int,int)]> {
   Ok(pairs)
 }
 
-fn read_int_pairs_try() -> IoResult<~[(int, int)]>{
-  let mut pairs = ~[];
+fn read_int_pairs_try() -> IoResult<std::vec_ng::Vec<(int, int)>>{
+  let mut pairs = std::vec_ng::Vec::new();
   //let _g = std::io::ignore_io_error();
   let path = Path::new(&"data/numbers.txt");
 

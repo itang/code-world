@@ -1,3 +1,5 @@
+#[allow(deprecated_owned_vector)];
+
 extern crate collections;
 
 use collections::HashMap;

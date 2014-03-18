@@ -1,6 +1,5 @@
 // TODO:
 // Should be Sendable ?
-extern crate extra;
 extern crate time;
 
 use std::clone::Clone;

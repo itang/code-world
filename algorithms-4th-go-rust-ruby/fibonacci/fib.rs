@@ -6,13 +6,15 @@ use fibonacci::fib;
 use fibonacci::fibs;
 
 mod fibonacci {
+  use std::vec_ng::Vec;
+
   pub fn fib(i: int) -> int {
     if i==0 || i ==1 { i }
     else { fib(i-1) + fib(i-2) }
   }
 
-  pub fn fibs(max: int) -> ~[int] {
-    let mut ret = ~[];
+  pub fn fibs(max: int) -> Vec<int> {
+    let mut ret = Vec::new();
     for i in range(0, max) {
       ret.push(fib(i));
     }
@@ -44,7 +46,7 @@ mod testutil {
 
 #[cfg(test)]
 mod tests {
-  extern mod extra;
+  extern crate test;
 
   use fibonacci::fib;
   use Td = testutil::Td;
@@ -71,7 +73,7 @@ mod tests {
   }
 
   #[bench]
-  fn bench_it(b: &mut extra::test::BenchHarness) {
+  fn bench_it(b: &mut test::BenchHarness) {
     b.iter(|| { fib(30); });
   }
 }
