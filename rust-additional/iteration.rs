@@ -82,7 +82,7 @@ fn container_iterators() {
     print!("{:d}", *i);
   }
   println!("rev_iter:");
-  for i in v3.rev_iter() {
+  for i in v3.as_slice().rev_iter() {
     print!("{:d}", *i);
   }
   println!("");
