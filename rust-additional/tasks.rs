@@ -66,7 +66,7 @@ fn main() {
   shared_tx();
 
   fn advance() {
-    let rxs = std::vec_ng::Vec::from_fn(3, |init_val| {
+    let rxs = std::vec::Vec::from_fn(3, |init_val| {
       let (tx, rx) = channel();
       spawn(proc() {
         println!("{:s}", init_val.to_str());
@@ -104,7 +104,7 @@ fn main() {
       local_sum
     }
 
-    let mut futures = std::vec_ng::Vec::from_fn(1000, |ind| sync::Future::spawn (proc(){ partial_sum(ind)}));
+    let mut futures = std::vec::Vec::from_fn(1000, |ind| sync::Future::spawn (proc(){ partial_sum(ind)}));
 
     let mut final_res = 0f64;
     for ft in futures.mut_iter() {
