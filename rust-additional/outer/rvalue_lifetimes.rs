@@ -22,15 +22,15 @@ fn main () {
 
     let map3: RefCell<HashMap<int, int>> = RefCell::new(HashMap::<int, int>::new());
     let mut r = map3.borrow_mut();
-    let data: &mut HashMap<int,int> = r.get();
+    let data: &mut HashMap<int,int> = &mut *r;
     data.insert(1,100);
     data.insert(1,200);
     data.insert(2,300);
     println!("map3 data: {:?}", data);
 
     let map4: RefCell<HashMap<int, int>> = RefCell::new(HashMap::new());
-    map4.borrow_mut().get().insert(1,100);
-    map4.borrow_mut().get().insert(2,200);
+    (*map4.borrow_mut()).insert(1,100);
+    (*map4.borrow_mut()).insert(2,200);
     println!("map4: {:?}", map4);
 
     fn rvalue() {

@@ -382,7 +382,6 @@ fn test_hashmap() {
         assert!(numbers.contains(&2));
         assert!(numbers.contains(&1));
 
-        println!("{:?}", map.values().map(|v| v.clone()).to_owned_vec());
         println!("{:?}", map.values().map(|v| v.clone()).collect::<~[uint]>());
 
         for (k, v) in map.move_iter() {

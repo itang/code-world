@@ -90,7 +90,7 @@ fn read_int_pairs() -> IoResult<std::vec::Vec<(int, int)>> {
     //2. Split the line into fields ("world").
     match line {
       Ok(it) => {
-        let fields = it.words().to_owned_vec();
+        let fields = it.words().collect::<~[&str]>();
         //3. Match the vector of fields against a vector pattern.
         if fields.len() == 2 {
           match (from_str::<int>(fields[0]), from_str::<int>(fields[1])) {
@@ -116,7 +116,7 @@ fn read_int_pairs_try() -> IoResult<std::vec::Vec<(int, int)>>{
   for line in reader.lines() {
     match line {
       Ok(it) => {
-        let fields = it.words().to_owned_vec();
+        let fields = it.words().collect::<~[&str]>();
         if fields.len() == 2{
           pairs.push((from_str::<int>(fields[0]).unwrap(), from_str::<int>(fields[1]).unwrap()));
         }else{
