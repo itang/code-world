@@ -3,7 +3,8 @@
 extern crate sync;
 
 use sync::Arc;
-use sync::RWArc;
+use sync::RWLock;
+use std::io::timer::Timer;
 
 fn main() {
   println!("Arc...");
@@ -18,7 +19,7 @@ fn main() {
 
       spawn(proc() {
         let local_arc = rx.recv();
-        let task_numbers = local_arc.get();
+        let task_numbers = *local_arc;
         println!("{:d}", task_numbers[num]);
       });
     }
@@ -29,7 +30,7 @@ fn main() {
   /// Rust provides a tools for shared mutable state: RWArc. This variant of an Arc allows the contents of the Arc to be mutated.
   fn rwarc() {
     let numbers = [1,2,3];
-    let numbers_arc = RWArc::new(numbers);
+    let numbers_arc = Arc::new(RWLock::new(numbers));
 
     for num in range(0, 3) {
       let (tx, rx) = channel();
@@ -37,12 +38,13 @@ fn main() {
 
       spawn(proc() {
         let local_arc = rx.recv();
-        local_arc.write(|nums| nums[num] += 1 );
-        local_arc.read(|nums| println!("{:d}", nums[num]) );
+         let mut val = local_arc.write();
+         val[num] +=1;
+         println!("{:d}", local_arc.read()[num]);
       });
     }
 
-    numbers_arc.read(|nums| { println!("{:?}", nums); });
+    println!("rwarc:{:?}", *numbers_arc.read())
   }
   rwarc();
 
@@ -58,12 +60,15 @@ fn main() {
   the_unsafe();
 
   arc_chan_tasks();
+
+  let mut timer = Timer::new().unwrap();
+  timer.sleep(1000);
 }
 
 
 fn arc_chan_tasks() {
     let s: ~str = ~"";
-    let rwarc = RWArc::new(s);
+    let rwarc = Arc::new(RWLock::new(s));
 
     let mut i = 0;
     for _ in range(0, 100000) {
@@ -72,13 +77,10 @@ fn arc_chan_tasks() {
         i = i + 1;
         spawn(proc() {
            let (index, local_arc) = rx.recv();
-            local_arc.write(|it| {
-                it.push_char( (index % 128) as u8 as char);
-            });
+           let mut val = local_arc.write();
+           val.push_char((index % 128) as u8 as char);
         });
     }
 
-    rwarc.read(|it|{
-        println!("{:?}", it);
-    });
+    println!("arc_chan_tasks: {:?}",  *rwarc.read());
 }
