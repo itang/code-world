@@ -1,7 +1,7 @@
-#[crate_id="main"];
+#![crate_id="main"]
 
-#[allow(deprecated_owned_vector)];
-#[feature(macro_rules, phase)];
+#![allow(deprecated_owned_vector)]
+#![feature(macro_rules, phase)]
 
 extern crate getopts;
 

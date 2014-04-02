@@ -1,6 +1,6 @@
-#[feature(managed_boxes)];
-#[allow(deprecated_owned_vector)];
-#[feature(phase)];
+#![feature(managed_boxes)]
+#![allow(deprecated_owned_vector)]
+#![feature(phase)]
 
 extern crate collections;
 extern crate rand;
@@ -975,18 +975,18 @@ fn closures() {
 
   //
   let mut max = 0;
-  [1,2,3,200,100].map(|x| if *x > max { max = *x });
+  [1,2,3,200,100].iter().map(|x| if *x > max { max = *x });
   assert_eq!(200, max);
 
   fn max_it(i: ~[int]) -> int {
     let mut max = 0;
-    i.map(|x| if *x > max { max = *x });
+    i.iter().map(|x| if *x > max { max = *x });
     max
   }
 
   fn max_stack(i: [int, ..4]) -> int {
     let mut max = 0;
-    i.map(|x| if *x > max { max = *x });
+    i.iter().map(|x| if *x > max { max = *x });
     max
   }
 

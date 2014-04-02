@@ -1,6 +1,6 @@
-#[feature(macro_rules)];
-#[feature(struct_variant)];
-#[allow(deprecated_owned_vector)];
+#![feature(macro_rules)]
+#![feature(struct_variant)]
+#![allow(deprecated_owned_vector)]
 
 extern crate collections;
 extern crate rand;

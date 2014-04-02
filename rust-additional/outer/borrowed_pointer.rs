@@ -1,4 +1,4 @@
-#[feature(managed_boxes)];
+#![feature(managed_boxes)]
 struct Record {
   x: int,
   y: int

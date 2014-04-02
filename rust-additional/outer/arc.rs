@@ -1,4 +1,4 @@
-#[allow(unused_unsafe)];
+#![allow(unused_unsafe)]
 
 extern crate sync;
 

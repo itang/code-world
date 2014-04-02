@@ -1,4 +1,4 @@
-#[allow(deprecated_owned_vector)];
+#![allow(deprecated_owned_vector)]
 
 trait Image {
     fn get_pixels<'a>(&'a self) -> &'a [u32];

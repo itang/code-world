@@ -1,4 +1,4 @@
-#[allow(deprecated_owned_vector)];
+#![allow(deprecated_owned_vector)]
 
 use std::io::println;
 

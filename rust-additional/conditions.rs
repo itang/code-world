@@ -1,8 +1,8 @@
-#[allow(unused_imports)];
-#[allow(unreachable_code)];
-#[allow(unused_variable)];
-#[allow(unused_mut)];
-#[allow(deprecated_owned_vector)];
+#![allow(unused_imports)]
+#![allow(unreachable_code)]
+#![allow(unused_variable)]
+#![allow(unused_mut)]
+#![allow(deprecated_owned_vector)]
 
 use std::io::BufferedReader;
 use std::io::File;

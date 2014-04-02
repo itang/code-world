@@ -1,4 +1,4 @@
-#[feature(managed_boxes)];
+#![feature(managed_boxes)]
 
 use std::io::println;
 
