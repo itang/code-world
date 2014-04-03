@@ -10,7 +10,6 @@ extern crate log;
 use collections::HashMap;
 
 use std::f64;
-use std::num::atan;
 use std::mem::size_of;
 use std::rc::Rc;
 use std::gc::Gc;
@@ -296,11 +295,12 @@ fn control_structures() {
     match vector {
       (0.0, y) if y < 0.0 => 1.5 * pi,
       (0.0, _) => 0.5 * pi,
-      (x, y) => atan(y/x)
+      (x, y) => (y/x).atan()
     }
   }
-
-  assert_eq!(atan(200.0/100.0), angle((100.0, 200.0)));
+  let r1 = (200.0f64/100.0).atan();
+  let r2 = angle((100.0, 200.0));
+  assert_eq!(r1, r2);
 
   fn gettupleoftwoints() -> (int, int) {
     (1, 1)
@@ -703,7 +703,7 @@ fn borrowed_pointers() {
   fn compute_distance(p1: &Point, p2: &Point) -> f64 {
     let xd = p1.x - p2.x;
     let yd = p1.y - p2.y;
-    std::num::sqrt(xd * xd + yd * yd)
+    (xd * xd + yd * yd).sqrt()
   }
   compute_distance(&on_the_stack, managed_box);
   compute_distance(owned_box, managed_box);
@@ -975,18 +975,27 @@ fn closures() {
 
   //
   let mut max = 0;
-  [1,2,3,200,100].iter().map(|x| if *x > max { max = *x });
+  //[1,2,3,200,100].iter().map(|x| println!("{}", x));
+  for &x in  [1,2,3,200,100].iter() {
+    if x > max { max = x }
+  }
+
+  //[1,2,3,200,100].iter().map(|x| if *x > max { max = *x });
   assert_eq!(200, max);
 
   fn max_it(i: ~[int]) -> int {
     let mut max = 0;
-    i.iter().map(|x| if *x > max { max = *x });
+    for &x in i.iter() {
+      if x > max { max = x }
+    }
     max
   }
 
   fn max_stack(i: [int, ..4]) -> int {
     let mut max = 0;
-    i.iter().map(|x| if *x > max { max = *x });
+    for &x in i.iter() {
+      if x > max { max = x }
+    }
     max
   }
 
