@@ -13,7 +13,7 @@ fn main() {
     let numbers = [1, 2, 3];
     let numbers_arc = Arc::new(numbers);
 
-    for num in range(0, 3) {
+    for num in range(0u, 3) {
       let (tx, rx) = channel();
       tx.send(numbers_arc.clone());
 
@@ -32,7 +32,7 @@ fn main() {
     let numbers = [1,2,3];
     let numbers_arc = Arc::new(RWLock::new(numbers));
 
-    for num in range(0, 3) {
+    for num in range(0u, 3) {
       let (tx, rx) = channel();
       tx.send(numbers_arc.clone());
 
