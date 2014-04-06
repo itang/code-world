@@ -2142,3 +2142,68 @@ host: x86_64-unknown-linux-gnu
 par_sum(100000): 4999950000
 0.62user 1.50system 0:00.86elapsed 245%CPU (0avgtext+0avgdata 4400maxresident)k
 0inputs+0outputs (0major+2107minor)pagefaults 0swaps
+
+2014年 04月 05日 星期六 21:05:11 CST
+===============================
+go version go1.2.1 linux/amd64
+ParSum(100000): 4999950000
+0.42user 0.32system 0:00.37elapsed 198%CPU (0avgtext+0avgdata 460112maxresident)k
+0inputs+0outputs (0major+116087minor)pagefaults 0swaps
+
+rustc 0.11-pre
+host: x86_64-unknown-linux-gnu
+par_sum(100000): 4999950000
+0.61user 1.54system 0:00.96elapsed 224%CPU (0avgtext+0avgdata 4564maxresident)k
+0inputs+0outputs (0major+3418minor)pagefaults 0swaps
+
+2014年 04月 06日 星期日 14:57:45 CST
+===============================
+go version go1.2.1 linux/amd64
+ParSum(100000): 4999950000
+0.47user 0.37system 0:00.39elapsed 212%CPU (0avgtext+0avgdata 460408maxresident)k
+0inputs+0outputs (0major+116168minor)pagefaults 0swaps
+
+rustc 0.11-pre
+host: x86_64-unknown-linux-gnu
+par_sum(100000): 4999950000
+0.69user 1.52system 0:00.95elapsed 232%CPU (0avgtext+0avgdata 4716maxresident)k
+0inputs+0outputs (0major+4240minor)pagefaults 0swaps
+
+2014年 04月 06日 星期日 15:02:48 CST
+===============================
+go version go1.2.1 linux/amd64
+ParSum(100000): 4999950000
+0.50user 0.38system 0:00.41elapsed 215%CPU (0avgtext+0avgdata 459948maxresident)k
+0inputs+0outputs (0major+116047minor)pagefaults 0swaps
+
+rustc 0.11-pre
+host: x86_64-unknown-linux-gnu
+par_sum(100000): 4999950000
+0.68user 1.48system 0:00.88elapsed 245%CPU (0avgtext+0avgdata 4420maxresident)k
+0inputs+0outputs (0major+2976minor)pagefaults 0swaps
+
+2014年 04月 06日 星期日 15:47:44 CST
+===============================
+go version go1.2.1 linux/amd64
+ParSum(100000): 4999950000
+0.43user 0.34system 0:00.40elapsed 192%CPU (0avgtext+0avgdata 460520maxresident)k
+0inputs+0outputs (0major+116193minor)pagefaults 0swaps
+
+rustc 0.11-pre
+host: x86_64-unknown-linux-gnu
+par_sum(100000): 4999950000
+0.71user 1.59system 0:01.12elapsed 205%CPU (0avgtext+0avgdata 4732maxresident)k
+0inputs+0outputs (0major+7605minor)pagefaults 0swaps
+
+2014年 04月 06日 星期日 15:59:07 CST
+===============================
+go version go1.2.1 linux/amd64
+ParSum(100000): 4999950000
+0.54user 0.40system 0:00.43elapsed 217%CPU (0avgtext+0avgdata 459888maxresident)k
+0inputs+0outputs (0major+116031minor)pagefaults 0swaps
+
+rustc 0.11-pre
+host: x86_64-unknown-linux-gnu
+par_sum(100000): 4999950000
+0.65user 1.48system 0:00.85elapsed 250%CPU (0avgtext+0avgdata 4420maxresident)k
+0inputs+0outputs (0major+2312minor)pagefaults 0swaps
