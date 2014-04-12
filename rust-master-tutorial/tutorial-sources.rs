@@ -924,10 +924,12 @@ fn vectors() {
 }
 
 fn strings() {
-  let mut string = ~"fo";
+  let mut string =  StrBuf::from_str("fo");
+  string = string.append("fo");
   string.push_char('o');
-  for c in range(0, string.len()){
-    format!("{:u},", string[c]);
+  let s = string.as_slice();
+  for c in range(0, s.len()){
+    format!("{:u},", s[c]);
   }
 
   // An unadorned string literal is an immutable string slice

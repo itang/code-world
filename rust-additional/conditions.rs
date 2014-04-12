@@ -9,6 +9,7 @@ use std::io::File;
 use std::io::IoResult;
 use std::task;
 use std::io::println;
+use std::vec::Vec;
 
 mod BufferedReader {
   use std::io::File;
@@ -20,7 +21,7 @@ mod BufferedReader {
     45 67\n\
     ");
   pub fn new(_inner: File) -> BufferedReader<MemReader> {
-    BufferedReader::new(MemReader::new(s.to_owned()))
+    BufferedReader::new(MemReader::new(Vec::from_slice(s)))
   }
 }
 

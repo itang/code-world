@@ -67,7 +67,7 @@ fn main() {
 
 
 fn arc_chan_tasks() {
-    let s: ~str = ~"";
+    let s = StrBuf::new();
     let rwarc = Arc::new(RWLock::new(s));
 
     let mut i = 0;
