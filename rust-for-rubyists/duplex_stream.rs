@@ -18,8 +18,8 @@ fn main() {
     plus_one(&to_child);
   });
 
-  from_child.try_send(1);
-  from_child.try_send(100);
+  let _ = from_child.send_opt(1);
+  let _ = from_child.send_opt(100);
   from_child.send(1000);
   from_child.send(10000);
   from_child.send(0);
